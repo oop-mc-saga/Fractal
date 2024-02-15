@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author tadaki
  */
-public class FractalList {
+public class FractalFactory {
 
     // Fractals available in this application
     public static enum FractalName {
@@ -25,7 +25,7 @@ public class FractalList {
     }
 
     // No instance is allowed to create
-    private FractalList() {
+    private FractalFactory() {
     }
 
     /**

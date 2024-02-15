@@ -22,18 +22,18 @@ public class FractalMain extends javax.swing.JFrame {
         JLabel label = new JLabel("Fractal");
         label.setFont(new java.awt.Font("MS UI Gothic", 0, 14));
         menuBar.add(label);
-        JComboBox<FractalList.FractalName> fractalList = new JComboBox<>();
-        for(FractalList.FractalName f:FractalList.FractalName.values()){
+        JComboBox<FractalFactory.FractalName> fractalList = new JComboBox<>();
+        for(FractalFactory.FractalName f:FractalFactory.FractalName.values()){
             fractalList.addItem(f);
         }
         //Action invoked at selecting item in fractalList
         fractalList.addActionListener(l->{
-            FractalList.FractalName fName= (FractalList.FractalName)fractalList.getSelectedItem();
-            sys = FractalList.createInstance(fName);
+            FractalFactory.FractalName fName= (FractalFactory.FractalName)fractalList.getSelectedItem();
+            sys = FractalFactory.createInstance(fName);
         }
         );
         menuBar.add(fractalList);
-        sys = FractalList.createInstance(FractalList.FractalName.Sierpinski);
+        sys = FractalFactory.createInstance(FractalFactory.FractalName.Sierpinski);
         fractalList.setSelectedIndex(0);
     }
 
