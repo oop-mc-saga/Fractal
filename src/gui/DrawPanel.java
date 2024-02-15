@@ -18,6 +18,7 @@ public class DrawPanel extends javax.swing.JPanel {
     private Fractal sys;
     private BufferedImage image = null;
     private final Dimension dimension;
+    private final double offset = .05;
 
     /**
      * Creates new form DrawPanel
@@ -25,11 +26,18 @@ public class DrawPanel extends javax.swing.JPanel {
     public DrawPanel() {
         initComponents();
         dimension = getPreferredSize();
+        initImage();
+    }
+
+    private void initImage() {
+        image = new BufferedImage(dimension.width, dimension.height,
+                BufferedImage.TYPE_INT_ARGB);
     }
 
     private void createImage() {
-        image = new BufferedImage(dimension.width, dimension.height,
-                BufferedImage.TYPE_INT_ARGB);
+        if (image == null) {
+            initImage();
+        }
         Color bg = getBackground();
         Graphics2D g = (Graphics2D) image.getGraphics();
         g.setColor(bg);
@@ -45,8 +53,9 @@ public class DrawPanel extends javax.swing.JPanel {
         createImage();
         Graphics2D g = (Graphics2D) image.getGraphics();
 
-        g.translate(0.05*dimension.width, 0.95*dimension.height);
-        g.scale(0.9*dimension.width, -0.9*dimension.height);
+        g.translate(offset * dimension.width, (1 - offset) * dimension.height);
+        g.scale((1 - 2 * offset) * dimension.width,
+                -(1 - 2 * offset) * dimension.height);
         g.setStroke(new BasicStroke(.005f));
 
         if (drawFlag) {
@@ -80,7 +89,7 @@ public class DrawPanel extends javax.swing.JPanel {
             return;
         }
         //show image
-        g.drawImage(image, 0, 0, image.getWidth(), 
+        g.drawImage(image, 0, 0, image.getWidth(),
                 image.getHeight(), this);
     }
 
