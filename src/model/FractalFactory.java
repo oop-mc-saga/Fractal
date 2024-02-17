@@ -77,10 +77,10 @@ public class FractalFactory {
                 double l = Math.sqrt(3.) - 1;
                 double s = 1. / 4;
                 double r = l / 3;
-                affineList.add(createTransformation(s, s, 0, 0, 
+                affineList.add(createTransformation(s, s, 0, 0,
                         .5 - s / 2, .5 + r - s / 2));
-                affineList.add(createTransformation(s, s, 0, 0, 
-                        .5 + r * Math.cos(Math.PI / 6) - s / 2, 
+                affineList.add(createTransformation(s, s, 0, 0,
+                        .5 + r * Math.cos(Math.PI / 6) - s / 2,
                         .5 - r * Math.sin(Math.PI / 6) - s / 2));
                 affineList.add(createTransformation(s, s, 0, 0,
                         .5 - r * Math.cos(Math.PI / 6) - s / 2,
@@ -93,7 +93,7 @@ public class FractalFactory {
                 double x = .55;
                 affineList.add(createTransformation(x, x, -phi, -phi, 0, 1));
                 affineList.add(createTransformation(x, x, -phi, -phi, 0, x));
-                affineList.add(createTransformation(x, x, -phi, -phi, 
+                affineList.add(createTransformation(x, x, -phi, -phi,
                         1 - x, (1 + x) / 2));
             }
             case TwinChristmasTree -> {

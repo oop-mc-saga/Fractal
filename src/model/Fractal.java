@@ -13,18 +13,18 @@ import java.util.List;
  */
 public class Fractal {
 
-    protected final List<AffineTransform> affine;
+    protected final List<AffineTransform> transformations;
     private List<Shape> shapes;
 
     public Fractal(List<AffineTransform> affine) {
-        this.affine = affine;
+        this.transformations = affine;
         initialize();
     }
 
     public Fractal(double[][] flatmatrixes) {
-        affine = new ArrayList<>();
+        transformations = new ArrayList<>();
         for (double[] matrix : flatmatrixes) {
-            affine.add(new AffineTransform(matrix));
+            transformations.add(new AffineTransform(matrix));
         }
         initialize();
     }
@@ -61,7 +61,7 @@ public class Fractal {
 
     public List<Shape> transform(List<Shape> shapeList) {
         List<Shape> newShapes = new ArrayList<>();
-        for (AffineTransform af : affine) {
+        for (AffineTransform af : transformations) {
             for (Shape s : shapeList) {
                 Shape t = af.createTransformedShape(s);
                 newShapes.add(t);
