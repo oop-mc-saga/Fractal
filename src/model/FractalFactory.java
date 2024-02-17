@@ -36,141 +36,86 @@ public class FractalFactory {
      */
     public static Fractal createInstance(FractalName fractalName) {
         List<AffineTransform> affineList = new ArrayList<>();
-        AffineTransform half = new AffineTransform();
-        half.scale(.5, .5);
-        
+
         switch (fractalName) {
             case Sierpinski -> {
-                affineList.add(half);
-                AffineTransform halfAbove = (AffineTransform) half.clone();
-                halfAbove.translate(Math.cos(Math.PI / 3.), 
-                        Math.sin(Math.PI / 3.));
-                affineList.add(halfAbove);
-                AffineTransform halfRight = (AffineTransform) half.clone();
-                halfRight.translate(1, 0);
-                affineList.add(halfRight);
+                double r = 1. / 2.;
+                affineList.add(createTransformation(r, r, 0, 0, 0, 0));
+                affineList.add(createTransformation(r, r, 0, 0, r, 0));
+                affineList.add(createTransformation(r, r, 0, 0, 1. / 4,
+                        Math.sqrt(4) / 4));
             }
             case SierpinskiLike -> {
-                affineList.add(half);
-                AffineTransform halfAbove = (AffineTransform) half.clone();
-                halfAbove.translate(0, 1);
-                affineList.add(halfAbove);
-                AffineTransform halfRight = (AffineTransform) half.clone();
-                halfRight.translate(1, 0);
-                affineList.add(halfRight);
-
+                double r = 1. / 2.;
+                affineList.add(createTransformation(r, r, 0, 0, 0, 0));
+                affineList.add(createTransformation(r, r, 0, 0, r, 0));
+                affineList.add(createTransformation(r, r, 0, 0, 0, r));
             }
             case SierpinskiLike1 -> {
-                affineList.add(half);
-                AffineTransform halfAbove = (AffineTransform) half.clone();
-                halfAbove.translate(0, 1);
-                affineList.add(halfAbove);
-                AffineTransform halfRight = (AffineTransform) half.clone();
-                halfRight.translate(2, 0);
-                halfRight.rotate(Math.PI / 2.);
-                affineList.add(halfRight);
+                double r = 1. / 2.;
+                double phi = Math.PI / 2;
+                affineList.add(createTransformation(r, r, 0, 0, 0, 0));
+                affineList.add(createTransformation(r, r, phi, phi, 2 * r, 0));
+                affineList.add(createTransformation(r, r, 0, 0, r, 2 * r));
             }
             case SierpinskiLike2 -> {
-                affineList.add(half);
-                AffineTransform halfAbove = (AffineTransform) half.clone();
-                halfAbove.translate(1, 1);
-                halfAbove.rotate(Math.PI / 2);
-                affineList.add(halfAbove);
-                AffineTransform halfRight = (AffineTransform) half.clone();
-                halfRight.translate(2, 0);
-                halfRight.rotate(Math.PI / 2.);
-                affineList.add(halfRight);
-
+                double r = 1. / 2.;
+                double phi = Math.PI / 2;
+                affineList.add(createTransformation(r, r, 0, 0, 0, 0));
+                affineList.add(createTransformation(r, r, phi, phi, 2 * r, 0));
+                affineList.add(createTransformation(r, r, phi, phi, r, r));
             }
             case CantorMaze -> {
-                double z = 1. / 3.;
-                double r = Math.PI / 2.;
-                AffineTransform left = new AffineTransform();
-                left.translate(z, 0);
-                left.rotate(r);
-                left.scale(1., z);
-                affineList.add(left);
-
-                AffineTransform right = new AffineTransform();
-                right.translate(2 * z, 1);
-                right.rotate(-r);
-                right.scale(1, z);
-                affineList.add(right);
-
-                AffineTransform up = new AffineTransform();
-                up.translate(z, 2 * z);
-                up.scale(z, z);
-                affineList.add(up);
+                double r = 1. / 3.;
+                double phi = Math.PI / 2;
+                affineList.add(createTransformation(1, r, phi, phi, r, 0));
+                affineList.add(createTransformation(r, r, 0, 0, r, 2 * r));
+                affineList.add(createTransformation(1, r, -phi, -phi, 2 * r, 1));
             }
             case Crystal -> {
+                double phi = Math.PI / 3.;
                 double l = Math.sqrt(3.) - 1;
                 double s = 1. / 4;
                 double r = l / 3;
-                AffineTransform up = new AffineTransform();
-                up.translate(.5, .5);
-                up.translate(-s / 2, r - s / 2);
-                up.scale(s, s);
-                affineList.add(up);
-
-                AffineTransform left = new AffineTransform();
-                left.translate(.5, .5);
-                left.translate(r * Math.cos(Math.PI / 6) - s / 2,
-                        -r * Math.sin(Math.PI / 6) - s / 2);
-                left.scale(s, s);
-                affineList.add(left);
-
-                AffineTransform right = new AffineTransform();
-                right.translate(.5, .5);
-                right.translate(-r * Math.cos(Math.PI / 6) - s / 2,
-                        -r * Math.sin(Math.PI / 6) - s / 2);
-                right.scale(s, s);
-                affineList.add(right);
-
-                AffineTransform main = new AffineTransform();
-                main.translate(l * Math.cos(Math.PI / 6.), 0);
-                main.rotate(Math.PI / 3);
-                main.scale(l, l);
-                affineList.add(main);
+                affineList.add(createTransformation(s, s, 0, 0, 
+                        .5 - s / 2, .5 + r - s / 2));
+                affineList.add(createTransformation(s, s, 0, 0, 
+                        .5 + r * Math.cos(Math.PI / 6) - s / 2, 
+                        .5 - r * Math.sin(Math.PI / 6) - s / 2));
+                affineList.add(createTransformation(s, s, 0, 0,
+                        .5 - r * Math.cos(Math.PI / 6) - s / 2,
+                        .5 - r * Math.sin(Math.PI / 6) - s / 2));
+                affineList.add(createTransformation(l, l, phi, phi,
+                        l * Math.cos(phi / 2), 0));
             }
             case Dragon -> {
-                double z = 1 / Math.sqrt(3.);
-                double r = Math.PI / 2.;
-                AffineTransform one = new AffineTransform();
-                one.translate(0., 1.);
-                one.rotate(-r);
-                one.scale(z, z);
-                affineList.add(one);
-
-                AffineTransform two = new AffineTransform();
-                two.translate(0., z);
-                two.rotate(-r);
-                two.scale(z, z);
-                affineList.add(two);
-
-                AffineTransform three = new AffineTransform();
-                three.translate(1 - z, (1 + z) / 2);
-                three.rotate(-r);
-                three.scale(z, z);
-                affineList.add(three);
+                double phi = Math.PI / 2.;
+                double x = .55;
+                affineList.add(createTransformation(x, x, -phi, -phi, 0, 1));
+                affineList.add(createTransformation(x, x, -phi, -phi, 0, x));
+                affineList.add(createTransformation(x, x, -phi, -phi, 
+                        1 - x, (1 + x) / 2));
             }
             case TwinChristmasTree -> {
-                AffineTransform left = (AffineTransform) half.clone();
-                left.translate(1, 0);
-                left.rotate(Math.PI / 2);
-                affineList.add(left);
-                AffineTransform right = (AffineTransform) half.clone();
-                right.translate(1, 1);
-                right.rotate(-Math.PI / 2);
-                affineList.add(right);
-                AffineTransform up = (AffineTransform) half.clone();
-                up.translate(.5, 1);
-                affineList.add(up);
+                double phi = Math.PI / 2.;
+                double r = .5;
+                affineList.add(createTransformation(r, r, phi, phi, 1. / 2, 0));
+                affineList.add(createTransformation(r, r, 0, 0, 1. / 4, 1. / 2));
+                affineList.add(createTransformation(r, r, -phi, -phi,
+                        1. / 2, 1. / 2));
             }
             default -> {
                 affineList.add(new AffineTransform());
             }
         }
         return new Fractal(affineList);
+    }
+
+    public static AffineTransform createTransformation(
+            double r, double s, double phi, double psi,
+            double e, double f) {
+        return new AffineTransform(r * Math.cos(phi), r * Math.sin(phi),
+                -s * Math.sin(psi), s * Math.cos(psi), e, f);
     }
 
 }

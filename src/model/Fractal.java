@@ -76,7 +76,7 @@ public class Fractal {
         List<Shape> shapesList = transform(newShapes);
         return shapesList;
     }
-
+    
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
