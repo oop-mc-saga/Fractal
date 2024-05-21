@@ -16,25 +16,28 @@ public class Fractal {
     protected final List<AffineTransform> transformations;
     private List<Shape> shapes;
 
+    /**
+     * Constructor: this method is private to prevent direct instantiation
+     *
+     * @param affine
+     */
     public Fractal(List<AffineTransform> affine) {
         this.transformations = affine;
         initialize();
     }
 
-    public Fractal(double[][] flatmatrixes) {
-        transformations = new ArrayList<>();
-        for (double[] matrix : flatmatrixes) {
-            transformations.add(new AffineTransform(matrix));
-        }
-        initialize();
-    }
-
+    /**
+     * Create a square.
+     *
+     * @param forMap
+     * @return
+     */
     private Shape createSquare(boolean forMap) {
         Path2D.Double square = new Path2D.Double();
         Rectangle2D.Double outer = new Rectangle2D.Double(0., 0., 1., 1.);
         square.append(outer, false);
 
-        if (forMap) {
+        if (forMap) {//for drawing the map, add an inner shape
             Path2D.Double inner = new Path2D.Double();
             inner.moveTo(.1, .2);
             inner.lineTo(.3, .2);
@@ -53,6 +56,11 @@ public class Fractal {
         shapes.add(createSquare(false));
     }
 
+    /**
+     * Transforming the shapes
+     *
+     * @return
+     */
     public List<Shape> transform() {
         List<Shape> newShapes = transform(shapes);
         shapes = newShapes;
@@ -70,15 +78,21 @@ public class Fractal {
         return newShapes;
     }
 
+    /**
+     * Get the map
+     *
+     * @return
+     */
     public List<Shape> getMap() {
         List<Shape> newShapes = new ArrayList<>();
         newShapes.add(createSquare(true));
         List<Shape> shapesList = transform(newShapes);
         return shapesList;
     }
-    
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
 }

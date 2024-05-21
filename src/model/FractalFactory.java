@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Creating Fractal example
  *
  * @author tadaki
  */
 public class FractalFactory {
-
     // Fractals available in this application
+
     public static enum FractalName {
         Sierpinski,
         SierpinskiLike,
@@ -24,12 +23,8 @@ public class FractalFactory {
         Default;
     }
 
-    // No instance is allowed to create
-    private FractalFactory() {
-    }
-
     /**
-     * Create an instance
+     * Create an instance by fractal name
      *
      * @param fractalName
      * @return
@@ -111,11 +106,21 @@ public class FractalFactory {
         return new Fractal(affineList);
     }
 
+    /**
+     * Create a affine transformation
+     *
+     * @param r
+     * @param s
+     * @param phi
+     * @param psi
+     * @param e
+     * @param f
+     * @return
+     */
     public static AffineTransform createTransformation(
             double r, double s, double phi, double psi,
             double e, double f) {
         return new AffineTransform(r * Math.cos(phi), r * Math.sin(phi),
                 -s * Math.sin(psi), s * Math.cos(psi), e, f);
     }
-
 }
