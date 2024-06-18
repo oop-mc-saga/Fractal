@@ -4,8 +4,8 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -13,15 +13,15 @@ import java.util.List;
  */
 public class Fractal {
 
-    protected final List<AffineTransform> transformations;
-    private List<Shape> shapes;
+    protected final Set<AffineTransform> transformations;
+    private Set<Shape> shapes;
 
     /**
      * Constructor: this method is private to prevent direct instantiation
      *
      * @param affine
      */
-    public Fractal(List<AffineTransform> affine) {
+    public Fractal(Set<AffineTransform> affine) {
         this.transformations = affine;
         initialize();
     }
@@ -52,7 +52,7 @@ public class Fractal {
     }
 
     public final void initialize() {
-        shapes = new ArrayList<>();
+        shapes = new HashSet<>();
         shapes.add(createSquare(false));
     }
 
@@ -61,14 +61,14 @@ public class Fractal {
      *
      * @return
      */
-    public List<Shape> transform() {
-        List<Shape> newShapes = transform(shapes);
+    public Set<Shape> transform() {
+        Set<Shape> newShapes = transform(shapes);
         shapes = newShapes;
         return newShapes;
     }
 
-    public List<Shape> transform(List<Shape> shapeList) {
-        List<Shape> newShapes = new ArrayList<>();
+    public Set<Shape> transform(Set<Shape> shapeList) {
+        Set<Shape> newShapes = new HashSet<>();
         for (AffineTransform af : transformations) {
             for (Shape s : shapeList) {
                 Shape t = af.createTransformedShape(s);
@@ -83,10 +83,10 @@ public class Fractal {
      *
      * @return
      */
-    public List<Shape> getMap() {
-        List<Shape> newShapes = new ArrayList<>();
+    public Set<Shape> getMap() {
+        Set<Shape> newShapes = new HashSet<>();
         newShapes.add(createSquare(true));
-        List<Shape> shapesList = transform(newShapes);
+        Set<Shape> shapesList = transform(newShapes);
         return shapesList;
     }
 

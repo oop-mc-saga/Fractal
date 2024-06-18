@@ -1,8 +1,8 @@
 package model;
 
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -16,6 +16,7 @@ public class FractalFactory {
         SierpinskiLike,
         SierpinskiLike1,
         SierpinskiLike2,
+        Koch,
         CantorMaze,
         Crystal,
         Dragon,
@@ -30,7 +31,7 @@ public class FractalFactory {
      * @return
      */
     public static Fractal createInstance(FractalName fractalName) {
-        List<AffineTransform> affineList = new ArrayList<>();
+        Set<AffineTransform> affineList = new HashSet<>();
 
         switch (fractalName) {
             case Sierpinski -> {
@@ -51,7 +52,7 @@ public class FractalFactory {
                 double phi = Math.PI / 2;
                 affineList.add(createTransformation(r, r, 0, 0, 0, 0));
                 affineList.add(createTransformation(r, r, phi, phi, 2 * r, 0));
-                affineList.add(createTransformation(r, r, 0, 0, r, 2 * r));
+                affineList.add(createTransformation(r, r, 0, 0, r, r));
             }
             case SierpinskiLike2 -> {
                 double r = 1. / 2.;
@@ -59,6 +60,15 @@ public class FractalFactory {
                 affineList.add(createTransformation(r, r, 0, 0, 0, 0));
                 affineList.add(createTransformation(r, r, phi, phi, 2 * r, 0));
                 affineList.add(createTransformation(r, r, phi, phi, r, r));
+            }
+            case Koch->{
+                double r = 1. / 3.;
+                double phi = Math.PI / 3;
+
+                affineList.add(createTransformation(r, r, 0, 0, 0, 0));
+                affineList.add(createTransformation(r, r, phi, phi, r, 0));
+                affineList.add(createTransformation(r, r, -phi, -phi, .5, r*Math.sin(phi)));                
+                affineList.add(createTransformation(r, r, 0, 0, 2*r, 0));
             }
             case CantorMaze -> {
                 double r = 1. / 3.;

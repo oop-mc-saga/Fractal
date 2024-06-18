@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.image.BufferedImage;
-import java.util.List;
+import java.util.Set;
 import model.Fractal;
 
 /**
@@ -45,11 +45,11 @@ public class DrawPanel extends javax.swing.JPanel {
         g.setColor(getForeground());
     }
 
-    public void draw(List<Shape> shapes) {
+    public void draw(Set<Shape> shapes) {
         draw(shapes, false);
     }
 
-    public void draw(List<Shape> shapes, boolean drawFlag) {
+    public void draw(Set<Shape> shapes, boolean drawFlag) {
         createImage();
         Graphics2D g = (Graphics2D) image.getGraphics();
 

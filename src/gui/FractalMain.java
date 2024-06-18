@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.Shape;
-import java.util.List;
+import java.util.Set;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import model.*;
@@ -129,18 +129,18 @@ public class FractalMain extends javax.swing.JFrame {
     }//GEN-LAST:event_quitActionPerformed
 
     private void showMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showMapActionPerformed
-        List<Shape> shapes = sys.getMap();
+        Set<Shape> shapes = sys.getMap();
         drawPanel.draw(shapes,true);
     }//GEN-LAST:event_showMapActionPerformed
 
     private void oneStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneStepActionPerformed
-        List<Shape> shapes = sys.transform();
+        Set<Shape> shapes = sys.transform();
         drawPanel.draw(shapes,false);
     }//GEN-LAST:event_oneStepActionPerformed
 
     private void fractalInitializeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fractalInitializeActionPerformed
         sys.initialize();
-        List<Shape> shapes = sys.transform();
+        Set<Shape> shapes = sys.transform();
         drawPanel.draw(shapes,false);
     }//GEN-LAST:event_fractalInitializeActionPerformed
 
